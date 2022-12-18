@@ -7,7 +7,7 @@ import Auth from '../utils/auth';
 import { useMutation } from "@apollo/react-hooks";
 
 const LoginForm = () => {
-  const [userFormData, setUserFormData] = useState({ email: '', password: '' });
+  const [userData, setUserData] = useState({ email: "", password: "" });
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
 
@@ -15,7 +15,7 @@ const LoginForm = () => {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setUserFormData({ ...userFormData, [name]: value });
+    setUserData({ ...userData, [name]: value });
   };
 
   const handleFormSubmit = async (event) => {
@@ -30,7 +30,7 @@ const LoginForm = () => {
 
     try {
       const { data } = await loginUser({
-        variables: { ...userFormData },
+        variables: { ...userData },
       });
 
       Auth.login(data.login.token);
@@ -39,10 +39,10 @@ const LoginForm = () => {
       setShowAlert(true);
     }
 
-    setUserFormData({
-      username: '',
-      email: '',
-      password: '',
+    setUserData({
+      username: "",
+      email: "",
+      password: "",
     });
   };
 
@@ -59,7 +59,7 @@ const LoginForm = () => {
             placeholder='Your email'
             name='email'
             onChange={handleInputChange}
-            value={userFormData.email}
+            value={userData.email}
             required
           />
           <Form.Control.Feedback type='invalid'>Email is required!</Form.Control.Feedback>
@@ -72,13 +72,13 @@ const LoginForm = () => {
             placeholder='Your password'
             name='password'
             onChange={handleInputChange}
-            value={userFormData.password}
+            value={userData.password}
             required
           />
           <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
         </Form.Group>
         <Button
-          disabled={!(userFormData.email && userFormData.password)}
+          disabled={!(userData.email && userData.password)}
           type='submit'
           variant='success'>
           Submit
